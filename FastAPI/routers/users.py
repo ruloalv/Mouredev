@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-router = APIRouter()
+router = APIRouter(tags=["Users"]) #tags genera /docs separado para esta api
 
 # Inicia el server: python -m uvicorn users:router --reload
 
