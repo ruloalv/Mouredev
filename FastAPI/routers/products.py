@@ -1,9 +1,9 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 
 # Inicia el server: python -m uvicorn products:app --reload
 
-app = FastAPI()
+router = APIRouter()
 
-@app.get("/products")
+@router.get("/products")
 async def products():
     return ["Producto 1", "Producto 2", "Producto 3", "Producto 4", "Producto 5"]
