@@ -39,7 +39,7 @@ async def user(user: User):
     # user_schema transforma los datos retornados de la db a un objeto de tipo usuario
     new_user = user_schema(db_client.local.users.find_one({"_id": id}))
 
-    return user
+    return User(**new_user)
 
 @router.put("/")
 async def user(user: User):
