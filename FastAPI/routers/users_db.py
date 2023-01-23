@@ -31,10 +31,12 @@ async def user(user: User):
     #    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El Usuario ya existe")
     
     user_dict = dict(user)
-    del user_dict["id"] # inserta el usuario sin id, así lo autogenera la db
+    del user_dict["id"] # elimina el campo id de la variable para que lo genere mongodb
 
     id = db_client.local.users.insert_one(user_dict).inserted_id
 
+    # por defecto mongodb genera la clave en _id
+    # user_schema transforma los datos retornados de la db a un objeto de tipo usuario
     new_user = user_schema(db_client.local.users.find_one({"_id": id}))
 
     return user
