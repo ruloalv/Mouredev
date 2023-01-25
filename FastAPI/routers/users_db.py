@@ -18,12 +18,12 @@ async def users():
 #Path
 @router.get("/{id}")
 async def user(id: int):
-    return search_user(id)
+    return search_user_by_email(id)
 
 #Query
 @router.get("/")
 async def user(id: int):
-    return search_user(id)
+    return search_user_by_email(id)
 
 # id primer usuario: 63d02710709f763a0a6b2a14
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
