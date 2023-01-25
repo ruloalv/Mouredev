@@ -25,6 +25,7 @@ async def user(id: int):
 async def user(id: int):
     return search_user(id)
 
+# id primer usuario: 63d02710709f763a0a6b2a14
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def user(user: User):
     #if type(search_user(user.id)) == User:
@@ -63,9 +64,8 @@ async def user(id: int):
     if not found:
         return {"error": "No se ha eliminado el usuario"}
 
-def search_user(id: int):
-    users = filter(lambda user: user.id == id, users_list)
+def search_user_by_email(email: str):
     try:
-        return list(users)[0]
+        return user_schema(db_client.local.user.find_one({"email": email}))
     except:
         return {"error":"No se ha encontrado el usuario"}
