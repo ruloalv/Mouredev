@@ -28,8 +28,8 @@ async def user(id: int):
 # id primer usuario: 63d02710709f763a0a6b2a14
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def user(user: User):
-    #if type(search_user(user.id)) == User:
-    #    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El Usuario ya existe")
+    if type(search_user_by_email(user.email)) == User:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El Usuario ya existe")
     
     user_dict = dict(user)
     del user_dict["id"] # elimina el campo id de la variable para que lo genere mongodb
@@ -66,6 +66,7 @@ async def user(id: int):
 
 def search_user_by_email(email: str):
     try:
-        return user_schema(db_client.local.user.find_one({"email": email}))
+        user = db_client.local.users.find_one({"email": email})
+        return User(**user_schema(user))
     except:
         return {"error":"No se ha encontrado el usuario"}
